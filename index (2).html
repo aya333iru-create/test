@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+    <title>NurseNexus</title>
+    <!-- Tailwind CSS & Plugins -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Google Fonts & Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container": "#efeded",
+                        "secondary-fixed-dim": "#f0bc98",
+                        "inverse-on-surface": "#f2f0f0",
+                        "inverse-surface": "#303030",
+                        "on-surface": "#1b1c1c",
+                        "on-secondary-fixed-variant": "#633e23",
+                        "inverse-primary": "#ffb4a1",
+                        "tertiary-fixed-dim": "#ffb3b0",
+                        "error": "#ba1a1a",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#54433f",
+                        "surface-dim": "#dbd9d9",
+                        "surface-bright": "#fbf9f8",
+                        "on-primary-fixed-variant": "#753321",
+                        "surface-warm": "#FFF5F5",
+                        "on-secondary-container": "#7a5336",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#eae8e7",
+                        "on-primary-fixed": "#3c0800",
+                        "teal-calm": "#82C0C0",
+                        "secondary-fixed": "#ffdcc6",
+                        "on-tertiary-container": "#89121e",
+                        "on-secondary-fixed": "#301401",
+                        "primary-fixed-dim": "#ffb4a1",
+                        "primary": "#924a36",
+                        "outline": "#87736e",
+                        "outline-variant": "#dac1bb",
+                        "on-tertiary-fixed": "#410006",
+                        "on-primary-container": "#72301f",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#924a36",
+                        "tertiary-fixed": "#ffdad8",
+                        "on-error-container": "#93000a",
+                        "teal-deep": "#4E8C8C",
+                        "surface": "#fbf9f8",
+                        "tertiary-container": "#ff9491",
+                        "primary-container": "#f69a82",
+                        "on-background": "#1b1c1c",
+                        "secondary-container": "#ffc9a6",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e4e2e2",
+                        "secondary": "#7e5539",
+                        "surface-container-low": "#f5f3f3",
+                        "primary-fixed": "#ffdbd2",
+                        "tertiary": "#ae2f34",
+                        "on-tertiary-fixed-variant": "#8c1520",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#fbf9f8",
+                        "surface-container-highest": "#e4e2e2"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "unit": "8px",
+                        "margin-mobile": "20px",
+                        "gutter": "16px",
+                        "margin-desktop": "40px",
+                        "container-max": "1200px"
+                    },
+                    fontFamily: {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"]
+                    },
+                    fontSize: {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FFF5F5;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1b1c1c;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-icon {
+            font-variation-settings: 'FILL' 1 !important;
+        }
+        .safe-toggle-gradient {
+            background: linear-gradient(135deg, #f69a82 0%, #ffc9a6 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(218, 193, 187, 0.3);
+        }
+        .subtle-shadow {
+            box-shadow: 0px 4px 20px rgba(74, 74, 74, 0.05);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .category-card {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .category-card:active {
+            transform: scale(0.96);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #dac1bb; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #87736e; }
+    </style>
+</head>
+<body class="min-h-screen pb-24 text-on-surface">
+
+    <!-- Top AppBar (Shared) -->
+    <header class="w-full top-0 sticky z-50 bg-surface-bright dark:bg-surface-dim shadow-none transition-shadow duration-200">
+        <div class="flex justify-between items-center px-margin-mobile h-16 w-full max-w-container-max mx-auto">
+            <div class="flex items-center gap-2 cursor-pointer active:scale-95 duration-150 transition-transform" onclick="navigateTo('page-home')">
+                <span class="material-symbols-outlined text-primary text-headline-md">spa</span>
+                <span class="text-headline-md font-headline-md font-bold text-primary">NurseNexus</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-on-surface-variant hover:opacity-80 transition-opacity cursor-pointer">search</span>
+                <span class="material-symbols-outlined text-on-surface-variant hover:opacity-80 transition-opacity cursor-pointer">settings</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Views Container -->
+    <main class="max-w-container-max mx-auto">
+
+        <!-- 1. タイムライン (Timeline / Home) -->
+        <section id="page-home" class="page-view px-margin-mobile pt-8 pb-12">
+            <!-- Sanctuary Toggle (Safe-Space) -->
+            <div class="mb-10 flex justify-center">
+                <div class="inline-flex items-center bg-surface-container-low rounded-full p-1.5 shadow-sm">
+                    <button class="px-6 py-2 rounded-full font-label-md text-label-md transition-all duration-300 bg-white text-primary shadow-sm" id="prof-mode-home">
+                        Professional
+                    </button>
+                    <button class="px-6 py-2 rounded-full font-label-md text-label-md transition-all duration-300 text-on-surface-variant hover:text-primary" id="comm-mode-home">
+                        Safe Space
+                    </button>
+                </div>
+            </div>
+            <!-- Header Greeting -->
+            <div class="mb-8">
+                <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary mb-2">Morning, Nurse.</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant">Your community is here to listen and lift you up.</p>
+            </div>
+            <!-- Timeline Feed -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+                <!-- Post Card 1 -->
+                <article class="bg-surface-container-lowest rounded-xl p-6 shadow-[0px_4px_20px_rgba(74,74,74,0.05)] border border-outline-variant hover:shadow-md transition-all cursor-pointer">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center">
+                                <span class="material-symbols-outlined text-on-secondary-container">owl</span>
+                            </div>
+                            <div>
+                                <p class="font-label-md text-label-md text-on-surface">Night Shift Owl</p>
+                                <span class="font-label-sm text-label-sm text-teal-deep bg-teal-calm/10 px-2 py-0.5 rounded-full">Emergency Room</span>
+                            </div>
+                        </div>
+                        <button class="material-symbols-outlined text-on-surface-variant">more_horiz</button>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface mb-6">
+                        Rough night in the ER tonight. Three major traumas and short-staffed by two nurses. Just feeling a bit drained and wondering if I'm doing enough. Anyone else hitting that mid-week wall?
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-4 border-t border-outline-variant">
+                        <button class="flex items-center gap-2 px-4 py-2 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-sm text-label-sm hover:bg-secondary-container transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">favorite</span>
+                            Understand
+                        </button>
+                        <button class="flex items-center gap-2 px-4 py-2 rounded-full bg-tertiary-container/20 text-on-tertiary-container font-label-sm text-label-sm hover:bg-tertiary-container/40 transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">volunteer_activism</span>
+                            Sending love
+                        </button>
+                    </div>
+                </article>
+                <!-- Post Card 2 -->
+                <article class="bg-surface-container-lowest rounded-xl p-6 shadow-[0px_4px_20px_rgba(74,74,74,0.05)] border border-outline-variant hover:shadow-md transition-all cursor-pointer">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-primary-container/40 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-primary">stethoscope</span>
+                            </div>
+                            <div>
+                                <p class="font-label-md text-label-md text-on-surface">Compassionate Caregiver</p>
+                                <span class="font-label-sm text-label-sm text-on-primary-fixed-variant bg-primary-fixed/30 px-2 py-0.5 rounded-full">Pediatrics</span>
+                            </div>
+                        </div>
+                        <button class="material-symbols-outlined text-on-surface-variant">more_horiz</button>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface mb-6">
+                        A small win today: A patient who hasn't smiled in a week finally laughed at one of my silly jokes. Reminds me exactly why I chose this path, even through the hard days.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-4 border-t border-outline-variant">
+                        <button class="flex items-center gap-2 px-4 py-2 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-sm text-label-sm hover:bg-secondary-container transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">celebration</span>
+                            Celebrate
+                        </button>
+                        <button class="flex items-center gap-2 px-4 py-2 rounded-full bg-tertiary-container/20 text-on-tertiary-container font-label-sm text-label-sm hover:bg-tertiary-container/40 transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">sentiment_very_satisfied</span>
+                            So happy for you
+                        </button>
+                    </div>
+                </article>
+                <!-- Post Card 3 -->
+                <article class="bg-surface-container-lowest rounded-xl p-6 shadow-[0px_4px_20px_rgba(74,74,74,0.05)] border border-outline-variant hover:shadow-md transition-all cursor-pointer">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-teal-calm/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-teal-deep">self_improvement</span>
+                            </div>
+                            <div>
+                                <p class="font-label-md text-label-md text-on-surface">Zen Wanderer</p>
+                                <span class="font-label-sm text-label-sm text-secondary bg-secondary-container/30 px-2 py-0.5 rounded-full">Float Pool</span>
+                            </div>
+                        </div>
+                        <button class="material-symbols-outlined text-on-surface-variant">more_horiz</button>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface mb-6">
+                        Advice for new grads: Don't be afraid to ask 'stupid' questions. We've all been there, and your team would rather help you learn than fix a mistake later. You've got this!
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-4 border-t border-outline-variant">
+                        <button class="flex items-center gap-2 px-4 py-2 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-sm text-label-sm hover:bg-secondary-container transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">thumb_up</span>
+                            Solid Advice
+                        </button>
+                        <button class="flex items-center gap-2 px-4 py-2 rounded-full bg-tertiary-container/20 text-on-tertiary-container font-label-sm text-label-sm hover:bg-tertiary-container/40 transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">chat_bubble</span>
+                            Thank you
+                        </button>
+                    </div>
+                </article>
+                <!-- Encouragement Banner (Asymmetric Bento Element) -->
+                <div class="md:col-span-1 bg-primary text-on-primary rounded-2xl p-8 relative overflow-hidden flex flex-col justify-end min-h-[280px]">
+                    <div class="absolute top-0 right-0 p-4 opacity-20">
+                        <span class="material-symbols-outlined text-[120px]">support</span>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-headline-md text-headline-md mb-2">Need a mental break?</h3>
+                        <p class="font-body-md text-body-md mb-6 opacity-90">Enter the Safe Space to connect with an anonymous peer support group.</p>
+                        <button onclick="navigateTo('page-post')" class="bg-white text-primary font-label-md text-label-md px-6 py-3 rounded-full w-fit hover:scale-105 transition-transform active:scale-95">
+                            Join Room
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. カテゴリー探索 (Categories) -->
+        <section id="page-categories" class="page-view hidden px-margin-mobile pt-8 pb-12">
+            <!-- Welcome Area -->
+            <div class="mb-8">
+                <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-2">Explore the Sanctuary</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Find your specialized space to share, learn, and breathe among those who understand the journey.</p>
+            </div>
+            <!-- Search Bar -->
+            <div class="mb-10 group">
+                <div class="relative flex items-center">
+                    <span class="material-symbols-outlined absolute left-4 text-outline">search</span>
+                    <input id="category-search-input" class="w-full pl-12 pr-4 py-4 bg-surface-container-lowest border-none rounded-xl shadow-[0px_4px_20px_rgba(74,74,74,0.05)] focus:ring-2 focus:ring-teal-calm/30 font-body-md text-body-md transition-all outline-none" placeholder="Search topics, skills, or stories..." type="text"/>
+                </div>
+            </div>
+            <!-- Category Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter">
+                <!-- Category: Career Advice -->
+                <div class="category-card p-6 bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(74,74,74,0.05)] border border-outline-variant/30 flex flex-col gap-4 cursor-pointer hover:shadow-md">
+                    <div class="w-12 h-12 rounded-lg bg-primary-container flex items-center justify-center">
+                        <span class="material-symbols-outlined text-on-primary-container">work</span>
+                    </div>
+                    <div>
+                        <h3 class="font-label-md text-label-md text-on-surface mb-1">Career Advice</h3>
+                        <p class="font-label-sm text-label-sm text-on-surface-variant">Navigating shifts, promotions, and professional growth.</p>
+                    </div>
+                    <div class="mt-auto flex -space-x-2">
+                        <div class="w-6 h-6 rounded-full border-2 border-surface-container-lowest overflow-hidden bg-surface-variant">
+                            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXGRRHZAOjq2ZiqTYpp2ns6rJ5Ecfo536Ru00d7J-Ej3oxYd5z9DRFk3teTVM9rGG_0ThOPdViskdl7cJlU1Kkgp3ml-qh9rnZ1aunE2jvNufGc5pR3UqYwdDf6KpjEbUkyteFfw-PIksmLxU2oyA-itp5iJ3xGenxh0XY9dOqmZuVcC5B-YiQXvVGDtBuEIILZ0GLWf6IW5pkLcZ3_gJdLtUgkyXq8ZWI-fZWXESQSio-SJyyOeNe"/>
+                        </div>
+                        <div class="w-6 h-6 rounded-full border-2 border-surface-container-lowest overflow-hidden bg-surface-variant">
+                            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBK1yX8jCTsT0FQBKGlh6Z9LQmrTYKQsMZ3Nu0pNxsdEyXeRVFpiSDsnz-2kiUWIpHVUNtiQqcJUatEm-Zf5F1vdBj3-frC61h4QEXuUtIARUyTBcbiIOFX4NMvI__ZR8XKns2I5Co0d3dLWbcicHj7gKU8vgR-x0pZ8SNFgHBuz9EUZZXvrrl--ekRmGh8AZi1r0hD9X5fjaN--BafGZnJp-CTmC4CScq3LrudZRwIsUZ7mRAMapZg"/>
+                        </div>
+                        <span class="text-[10px] pl-4 text-outline font-label-sm self-center">1.2k active</span>
+                    </div>
+                </div>
+                <!-- Category: Human Relationships -->
+                <div class="category-card p-6 bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(74,74,74,0.05)] border border-outline-variant/30 flex flex-col gap-4 cursor-pointer hover:shadow-md">
+                    <div class="w-12 h-12 rounded-lg bg-secondary-container flex items-center justify-center">
+                        <span class="material-symbols-outlined text-on-secondary-container">favorite</span>
+                    </div>
+                    <div>
+                        <h3 class="font-label-md text-label-md text-on-surface mb-1">Human Relationships</h3>
+                        <p class="font-label-sm text-label-sm text-on-surface-variant">Managing patients, families, and team dynamics with empathy.</p>
+                    </div>
+                    <div class="mt-auto flex items-center gap-2">
+                        <span class="px-2 py-1 bg-surface-warm text-primary rounded-full font-label-sm text-[10px]">Empathy Room</span>
+                    </div>
+                </div>
+                <!-- Category: Clinical Skills -->
+                <div class="category-card p-6 bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(74,74,74,0.05)] border border-outline-variant/30 flex flex-col gap-4 cursor-pointer hover:shadow-md">
+                    <div class="w-12 h-12 rounded-lg bg-teal-calm/20 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-teal-deep">medical_services</span>
+                    </div>
+                    <div>
+                        <h3 class="font-label-md text-label-md text-on-surface mb-1">Clinical Skills</h3>
+                        <p class="font-label-sm text-label-sm text-on-surface-variant">Sharing best practices and navigating complex procedures.</p>
+                    </div>
+                    <div class="mt-auto">
+                        <div class="h-1 w-full bg-surface-container rounded-full overflow-hidden">
+                            <div class="h-full bg-teal-deep w-3/4"></div>
+                        </div>
+                        <p class="text-[10px] mt-1 text-outline">850 posts this week</p>
+                    </div>
+                </div>
+                <!-- Category: Burnout & Mental Health -->
+                <div class="category-card p-6 bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(74,74,74,0.05)] border border-outline-variant/30 flex flex-col gap-4 cursor-pointer hover:shadow-md sm:col-span-2 lg:col-span-1">
+                    <div class="w-12 h-12 rounded-lg bg-tertiary-container flex items-center justify-center">
+                        <span class="material-symbols-outlined text-on-tertiary-container">self_care</span>
+                    </div>
+                    <div>
+                        <h3 class="font-label-md text-label-md text-on-surface mb-1">Burnout & Mental Health</h3>
+                        <p class="font-label-sm text-label-sm text-on-surface-variant">Resources and peer support for the emotional toll of nursing.</p>
+                    </div>
+                    <div class="mt-auto flex gap-2">
+                        <div class="animate-pulse w-2 h-2 rounded-full bg-tertiary self-center"></div>
+                        <span class="font-label-sm text-on-tertiary-fixed-variant text-[11px]">24 Nurses listening now</span>
+                    </div>
+                </div>
+                <!-- Category: Safe Space (Venting) -->
+                <div class="category-card p-6 bg-surface-warm rounded-xl shadow-[0px_4px_20px_rgba(74,74,74,0.05)] border border-primary/10 flex flex-col sm:flex-row gap-6 cursor-pointer hover:shadow-md sm:col-span-2">
+                    <div class="flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-lg bg-primary-fixed flex items-center justify-center mb-4">
+                                <span class="material-symbols-outlined text-primary">diversity_1</span>
+                            </div>
+                            <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Safe Space (Venting)</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant">The anonymous corner of the sanctuary. Release your stress, share the hard days, and find radical validation without judgment.</p>
+                        </div>
+                        <div class="mt-6 flex items-center gap-4">
+                            <button onclick="navigateTo('page-post')" class="bg-primary text-on-primary px-4 py-2 rounded-full font-label-md text-label-md shadow-sm active:scale-95 transition-transform">Enter Anonymously</button>
+                            <span class="material-symbols-outlined text-primary-fixed-variant" style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div class="w-full sm:w-48 h-48 rounded-lg overflow-hidden relative hidden md:block">
+                        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFT-XoPlYiKQAhE_mikT6t3LQ9yxPKDRvUjd8dxT1xEjXKeRIlXP-vxf3DaxWj7zEi7FwVqfLmBqor5CcVlUkep7qs4_Fu4tJ2W0Ch6ptz_9Z8KyheMAI5CtTPNgS6jKkjbRgGbRyFVKbEL0bRMvEZzn5BYCBQpWPmLvMt1j-Hmu9zN843qRAaubBWAcRTfNMqpitp5W2mtXICOMFbp-ex0rSBpRfJLnAIl8N_latarOJ5VymoDs9j"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-warm/80 to-transparent"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Featured Resource Section -->
+            <div class="mt-16 mb-8 grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+                <div class="lg:col-span-5 order-2 lg:order-1">
+                    <span class="text-primary font-label-md text-label-md uppercase tracking-wider">Weekly Wisdom</span>
+                    <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mt-2 mb-4">Finding Calm in the Chaos</h2>
+                    <p class="font-body-md text-body-md text-on-surface-variant mb-6">Explore our latest guide on mindfulness techniques designed specifically for the 5-minute break between rounds.</p>
+                    <div class="flex items-center gap-4">
+                        <span class="material-symbols-outlined text-teal-deep">play_circle</span>
+                        <span class="font-label-md text-label-md text-teal-deep cursor-pointer hover:underline">Listen to Guided Session</span>
+                    </div>
+                </div>
+                <div class="lg:col-span-7 order-1 lg:order-2">
+                    <div class="relative rounded-2xl overflow-hidden aspect-video shadow-lg group">
+                        <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPRP6OBz1iLNMJEdNr2l-S2RqVVlofkedI4f6kCBq8NjonqJJSJU8YavKcLrEXB1u0w9mk0k0Wf3SFwyyRcDVs6BoJY5he8yKofmW2UUKnM28ADbfM1vuJKDaSxs5lkGm2sRe20MlQK-Oz5_lWQTb3rRwg-i2RnqCIPKM9wRpU4A37_QCFu3iowLoovlYfHZV4ueyG7akDY2u5qYakspO3F9UwD5putnBq-_U1mrYVtj9_JDiuAwKZ"/>
+                        <div class="absolute inset-0 bg-black/5 flex items-center justify-center">
+                            <div class="w-16 h-16 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center cursor-pointer hover:bg-white/50 transition-colors">
+                                <span class="material-symbols-outlined text-white text-4xl">play_arrow</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 投稿作成 (Create Post) -->
+        <section id="page-post" class="page-view hidden px-margin-mobile md:px-margin-desktop pt-8 pb-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Left Column: Guidelines & Tips (Desktop Only) -->
+                <aside class="hidden lg:flex lg:col-span-4 flex-col gap-6">
+                    <div class="glass-card rounded-xl p-6 subtle-shadow">
+                        <h2 class="font-headline-md text-headline-md text-primary mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined">security</span>
+                            Safe Space
+                        </h2>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-6">
+                            This is your sanctuary. We prioritize your privacy and emotional well-being above all else.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex gap-4 p-3 rounded-lg bg-surface-container-low">
+                                <span class="material-symbols-outlined text-teal-deep">verified_user</span>
+                                <div>
+                                    <p class="font-label-md text-label-md text-on-surface">Total Anonymity</p>
+                                    <p class="font-label-sm text-label-sm text-on-surface-variant">We never share your real identity with anyone.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 p-3 rounded-lg bg-surface-container-low">
+                                <span class="material-symbols-outlined text-teal-deep">forum</span>
+                                <div>
+                                    <p class="font-label-md text-label-md text-on-surface">Community Care</p>
+                                    <p class="font-label-sm text-label-sm text-on-surface-variant">Read by peers who understand your struggle.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-primary-container/20 border border-primary-container rounded-xl p-6">
+                        <h3 class="font-label-md text-label-md text-primary mb-3">Guidelines</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2 text-label-sm font-label-sm text-on-surface-variant">
+                                <span class="material-symbols-outlined text-primary text-[16px] mt-0.5">check_circle</span>
+                                Remove patient names or unique identifiers.
+                            </li>
+                            <li class="flex items-start gap-2 text-label-sm font-label-sm text-on-surface-variant">
+                                <span class="material-symbols-outlined text-primary text-[16px] mt-0.5">check_circle</span>
+                                Avoid specific hospital branch names.
+                            </li>
+                            <li class="flex items-start gap-2 text-label-sm font-label-sm text-on-surface-variant">
+                                <span class="material-symbols-outlined text-primary text-[16px] mt-0.5">check_circle</span>
+                                Share feelings, not just facts.
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+                <!-- Middle Column: Main Post Creation -->
+                <div class="lg:col-span-8">
+                    <div class="bg-surface-container-lowest rounded-2xl p-6 md:p-10 subtle-shadow border border-outline-variant/30">
+                        <header class="mb-8">
+                            <h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Exhale.</h1>
+                            <p class="font-body-lg text-body-lg text-on-surface-variant">Write what's weighing on you. This is a judgment-free zone.</p>
+                        </header>
+                        <form class="space-y-8" onsubmit="event.preventDefault(); navigateTo('page-home');">
+                            <!-- Text Area Input -->
+                            <div class="relative">
+                                <textarea id="post-textarea" class="w-full bg-surface-container-low border-none rounded-xl p-6 font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-teal-calm/50 placeholder:text-outline-variant resize-none" placeholder="I'm feeling overwhelmed today because..." rows="8"></textarea>
+                                <div id="char-count" class="absolute bottom-4 right-4 text-label-sm font-label-sm text-outline">
+                                    0 / 2000
+                                </div>
+                            </div>
+                            <!-- Tag Selection -->
+                            <div class="space-y-4">
+                                <label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-[18px]">local_offer</span>
+                                    Select a professional focus
+                                </label>
+                                <div class="flex flex-wrap gap-3 tag-buttons-container">
+                                    <button class="px-4 py-2 rounded-full border border-outline-variant font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">ICU</button>
+                                    <button class="px-4 py-2 rounded-full border border-outline-variant font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">Ward</button>
+                                    <button class="px-4 py-2 rounded-full border border-outline-variant font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">ER / A&E</button>
+                                    <button class="px-4 py-2 rounded-full border border-outline-variant font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">Clinic</button>
+                                    <button class="px-4 py-2 rounded-full border border-outline-variant font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">Community</button>
+                                    <button class="px-4 py-2 rounded-full border border-primary-container bg-primary-container/20 font-label-md text-label-md text-on-primary-container" type="button">Mental Health</button>
+                                </div>
+                            </div>
+                            <!-- Anonymity Toggle & Post Button -->
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-6 border-t border-outline-variant/20">
+                                <div class="flex items-center gap-4">
+                                    <div class="relative inline-block w-12 h-6 transition duration-200 ease-in bg-surface-container-highest rounded-full cursor-pointer">
+                                        <input checked="" class="absolute block w-6 h-6 bg-white border-4 border-surface-container-highest rounded-full appearance-none cursor-pointer checked:right-0 checked:bg-teal-calm right-6 transition-all duration-300" id="anon-toggle" type="checkbox"/>
+                                        <label class="block h-6 overflow-hidden bg-surface-container-highest rounded-full cursor-pointer" for="anon-toggle"></label>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-label-md text-label-md text-on-surface">Incognito Mode</span>
+                                        <span class="font-label-sm text-label-sm text-on-surface-variant">Stay 100% anonymous</span>
+                                    </div>
+                                </div>
+                                <button class="safe-toggle-gradient text-white font-label-md text-headline-md px-10 py-4 rounded-full shadow-lg hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-2" type="submit">
+                                    <span class="material-symbols-outlined">send</span>
+                                    Post Anonymously
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Mobile Guidelines -->
+                    <div class="mt-8 lg:hidden glass-card rounded-xl p-6 subtle-shadow border border-outline-variant/30">
+                        <h3 class="font-label-md text-label-md text-primary mb-3">Sharing Safely</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-4">Please ensure you are not sharing any HIPAA/Protected Health Information.</p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-surface-warm p-4 rounded-lg text-center">
+                                <span class="material-symbols-outlined text-teal-deep mb-2">no_accounts</span>
+                                <p class="font-label-sm text-label-sm">No Names</p>
+                            </div>
+                            <div class="bg-surface-warm p-4 rounded-lg text-center">
+                                <span class="material-symbols-outlined text-teal-deep mb-2">apartment</span>
+                                <p class="font-label-sm text-label-sm">No Locations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. マイページ (My Profile / My Page) -->
+        <section id="page-profile" class="page-view hidden px-margin-mobile pt-8 pb-12">
+            <!-- Profile Header Bento -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <!-- Identity Card -->
+                <div class="md:col-span-2 bg-surface-container-lowest rounded-xl p-8 flex flex-col md:flex-row items-center gap-8 shadow-[0px_4px_20px_rgba(74,74,74,0.05)] border border-outline-variant/20">
+                    <div class="relative">
+                        <div class="w-32 h-32 rounded-full overflow-hidden bg-secondary-container flex items-center justify-center border-4 border-white shadow-md">
+                            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7amB6IJQ-O41XmlBtt0vJ5OE1hK6GmABnjVgr7_lk2OZ0JYmi67UMPYx3KyF7Ea01UitawKh9q97jef8sL1cIcsof5awTdkeyiCl__tmCYzNtTEugemhW35fc491_cx7vwIrSBvMpz4CBmprZZxIsZ9_zm2bWdLuN6NKVHz9C46VE1bpH-iByefNvuEszUBjHa_EVGWBHjgpzwOGBTAbCtQz2lloKHOCTkLnm2-hWaoMz_onl64X3"/>
+                        </div>
+                        <div class="absolute -bottom-2 -right-2 bg-primary text-white p-2 rounded-full shadow-lg flex items-center justify-center cursor-pointer">
+                            <span class="material-symbols-outlined text-[20px]">edit</span>
+                        </div>
+                    </div>
+                    <div class="flex-1 text-center md:text-left">
+                        <div class="flex flex-col md:flex-row md:items-center gap-3 mb-2">
+                            <h2 class="font-headline-md text-headline-md text-on-surface">Anonymous Healer</h2>
+                            <span class="inline-flex items-center px-3 py-1 bg-teal-calm/20 text-teal-deep rounded-full text-label-sm font-label-md">
+                                Night Shift Professional
+                            </span>
+                        </div>
+                        <p class="text-on-surface-variant font-body-md mb-6 max-w-lg">Dedicated to providing compassionate care while navigating the complexities of modern medicine. Passionate about clinical excellence and emotional resilience.</p>
+                        <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+                            <button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-label-md hover:opacity-90 active:scale-95 transition-all shadow-sm">
+                                Edit Persona
+                            </button>
+                            <button class="border border-teal-deep text-teal-deep px-6 py-2.5 rounded-full font-label-md hover:bg-teal-calm/10 active:scale-95 transition-all">
+                                View Badge Room
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Gamification Rank Card -->
+                <div class="bg-surface-warm rounded-xl p-8 border border-outline-variant/30 flex flex-col justify-between shadow-[0px_4px_20px_rgba(74,74,74,0.05)]">
+                    <div>
+                        <h3 class="font-label-md text-on-surface-variant uppercase tracking-wider mb-4">Community Rank</h3>
+                        <div class="flex items-baseline gap-2 mb-2">
+                            <span class="font-headline-lg text-headline-lg text-primary">Senior Healer</span>
+                        </div>
+                        <p class="text-on-surface-variant text-label-md mb-6">458 Empathy Points away from 'Guardian Angel' status.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="w-full bg-surface-container rounded-full h-3">
+                            <div class="bg-primary h-full rounded-full w-[65%] transition-all duration-1000"></div>
+                        </div>
+                        <div class="flex justify-between items-center text-label-sm font-label-md text-on-surface-variant">
+                            <span>Level 14</span>
+                            <span>Level 15</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Main Content Area -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Left Sidebar: Quick Stats & Mode Toggle -->
+                <aside class="lg:col-span-1 space-y-6">
+                    <!-- Safe Space Toggle -->
+                    <div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/20 shadow-sm">
+                        <h4 class="font-label-md text-on-surface-variant mb-4">Focus Mode</h4>
+                        <div class="flex items-center justify-between p-2 bg-surface-container rounded-full cursor-pointer relative group">
+                            <div class="absolute left-1 w-[48%] h-[85%] bg-primary rounded-full transition-all duration-300 ease-in-out" id="profile-mode-slider"></div>
+                            <div class="z-10 flex-1 text-center py-1 text-label-sm font-label-md transition-colors text-white select-none" id="prof-text" onclick="toggleProfileMode('prof')">Professional</div>
+                            <div class="z-10 flex-1 text-center py-1 text-label-sm font-label-md transition-colors text-on-surface-variant select-none" id="comm-text" onclick="toggleProfileMode('comm')">Community</div>
+                        </div>
+                    </div>
+                    <!-- Stats Bento -->
+                    <div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/20 shadow-sm space-y-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center">
+                                <span class="material-symbols-outlined text-on-primary-container">article</span>
+                            </div>
+                            <div>
+                                <div class="text-headline-md font-headline-md leading-none">24</div>
+                                <div class="text-label-sm text-on-surface-variant">Past Posts</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center">
+                                <span class="material-symbols-outlined text-on-secondary-container">favorite</span>
+                            </div>
+                            <div>
+                                <div class="text-headline-md font-headline-md leading-none">1.2k</div>
+                                <div class="text-label-sm text-on-surface-variant">Reactions</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-tertiary-container flex items-center justify-center">
+                                <span class="material-symbols-outlined text-on-tertiary-container">diversity_1</span>
+                            </div>
+                            <div>
+                                <div class="text-headline-md font-headline-md leading-none">12</div>
+                                <div class="text-label-sm text-on-surface-variant">Safe Spaces</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Account Quick Settings -->
+                    <nav class="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/20 shadow-sm">
+                        <div class="p-4 font-label-md text-on-surface border-b border-outline-variant/10">Privacy & Account</div>
+                        <div class="flex flex-col">
+                            <a class="px-6 py-4 flex items-center justify-between hover:bg-surface-warm transition-colors group" href="#">
+                                <span class="text-body-md text-on-surface-variant group-hover:text-on-surface">Stealth Mode</span>
+                                <span class="material-symbols-outlined text-outline text-[20px]">toggle_on</span>
+                            </a>
+                            <a class="px-6 py-4 flex items-center justify-between hover:bg-surface-warm transition-colors group" href="#">
+                                <span class="text-body-md text-on-surface-variant group-hover:text-on-surface">Data Erasure</span>
+                                <span class="material-symbols-outlined text-outline text-[20px]">chevron_right</span>
+                            </a>
+                            <a class="px-6 py-4 flex items-center justify-between hover:bg-surface-warm transition-colors group" href="#">
+                                <span class="text-body-md text-on-surface-variant group-hover:text-on-surface">Notification History</span>
+                                <span class="material-symbols-outlined text-outline text-[20px]">chevron_right</span>
+                            </a>
+                        </div>
+                    </nav>
+                </aside>
+                <!-- Right Content: Post History & Reactions -->
+                <div class="lg:col-span-3 space-y-8">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-headline-md text-headline-md">Post History</h3>
+                        <div class="flex gap-2">
+                            <button class="p-2 rounded-lg bg-surface-container-high text-on-surface-variant"><span class="material-symbols-outlined">filter_list</span></button>
+                        </div>
+                    </div>
+                    <!-- Post Cards -->
+                    <div class="space-y-6">
+                        <!-- Post 1 -->
+                        <article class="bg-surface-container-lowest rounded-xl p-8 border border-outline-variant/20 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="flex gap-3 items-center">
+                                    <div class="w-2 h-10 bg-teal-calm rounded-full"></div>
+                                    <div>
+                                        <h4 class="font-label-md text-on-surface">Clinical Skills Safe Space</h4>
+                                        <span class="text-label-sm text-on-surface-variant">2 days ago • Public</span>
+                                    </div>
+                                </div>
+                                <span class="material-symbols-outlined text-on-surface-variant cursor-pointer">more_horiz</span>
+                            </div>
+                            <h5 class="text-body-lg font-headline-md mb-4">Handling high-stress ER situations: My 3 tips for emotional grounding.</h5>
+                            <p class="text-on-surface-variant font-body-md mb-6 line-clamp-3">After 12 hours on the floor, I've realized that the physical fatigue isn't what gets to us—it's the emotional weight. Here's how I manage to leave work at work...</p>
+                            <div class="flex flex-wrap items-center gap-4">
+                                <div class="flex items-center -space-x-2">
+                                    <div class="w-8 h-8 rounded-full bg-secondary-container border-2 border-white flex items-center justify-center text-[10px] text-on-secondary-container font-bold">JF</div>
+                                    <div class="w-8 h-8 rounded-full bg-tertiary-container border-2 border-white flex items-center justify-center text-[10px] text-on-tertiary-container font-bold">MK</div>
+                                    <div class="w-8 h-8 rounded-full bg-primary-container border-2 border-white flex items-center justify-center text-[10px] text-on-primary-container font-bold">+42</div>
+                                </div>
+                                <div class="h-4 w-[1px] bg-outline-variant"></div>
+                                <div class="flex gap-2">
+                                    <span class="inline-flex items-center px-3 py-1 bg-surface-warm text-primary rounded-full text-label-sm font-label-md border border-primary/10">
+                                        <span class="material-symbols-outlined text-[16px] mr-1 active-icon">favorite</span> 124
+                                    </span>
+                                    <span class="inline-flex items-center px-3 py-1 bg-teal-calm/10 text-teal-deep rounded-full text-label-sm font-label-md border border-teal-calm/10">
+                                        <span class="material-symbols-outlined text-[16px] mr-1">chat_bubble</span> 18
+                                    </span>
+                                </div>
+                            </div>
+                        </article>
+                        <!-- Post 2 -->
+                        <article class="bg-surface-container-lowest rounded-xl p-8 border border-outline-variant/20 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="flex gap-3 items-center">
+                                    <div class="w-2 h-10 bg-primary-container rounded-full"></div>
+                                    <div>
+                                        <h4 class="font-label-md text-on-surface">Relationship Support</h4>
+                                        <span class="text-label-sm text-on-surface-variant">1 week ago • Private</span>
+                                    </div>
+                                </div>
+                                <span class="material-symbols-outlined text-on-surface-variant cursor-pointer">more_horiz</span>
+                            </div>
+                            <h5 class="text-body-lg font-headline-md mb-4">Struggling with work-life balance during double shifts.</h5>
+                            <p class="text-on-surface-variant font-body-md mb-6 line-clamp-3">Does anyone else feel like their family only sees a ghost of who they used to be? I love my job, but the schedule is tearing my home life apart.</p>
+                            <div class="flex flex-wrap items-center gap-4">
+                                <div class="flex gap-2">
+                                    <span class="inline-flex items-center px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-label-sm font-label-md">
+                                        <span class="material-symbols-outlined text-[16px] mr-1 active-icon">psychology</span> 89 Me Too
+                                    </span>
+                                    <span class="inline-flex items-center px-3 py-1 bg-tertiary-container text-on-tertiary-container rounded-full text-label-sm font-label-md">
+                                        <span class="material-symbols-outlined text-[16px] mr-1 active-icon">sentiment_satisfied</span> 52 Hugs
+                                    </span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <!-- Load More -->
+                    <div class="flex justify-center pt-4">
+                        <button class="flex items-center gap-2 text-on-surface-variant font-label-md hover:text-primary transition-colors">
+                            Load Older Reflections
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar (Shared Shell) -->
+    <nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-2 pb-safe bg-surface-container-lowest dark:bg-surface-container-low shadow-[0px_-4px_20px_rgba(74,74,74,0.05)] rounded-t-xl z-50">
+        <button onclick="navigateTo('page-home')" id="nav-btn-home" class="nav-item flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:scale-90 transition-all duration-200">
+            <span class="material-symbols-outlined active-icon">home</span>
+            <span class="font-label-sm text-label-sm">Home</span>
+        </button>
+        <button onclick="navigateTo('page-categories')" id="nav-btn-categories" class="nav-item flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-all duration-200">
+            <span class="material-symbols-outlined">grid_view</span>
+            <span class="font-label-sm text-label-sm">Categories</span>
+        </button>
+        <button onclick="navigateTo('page-post')" id="nav-btn-post" class="nav-item flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-all duration-200">
+            <span class="material-symbols-outlined text-[28px]">add_circle</span>
+            <span class="font-label-sm text-label-sm">Post</span>
+        </button>
+        <button onclick="alert('No new notifications')" id="nav-btn-alerts" class="nav-item flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-all duration-200">
+            <span class="material-symbols-outlined">notifications</span>
+            <span class="font-label-sm text-label-sm">Alerts</span>
+        </button>
+        <button onclick="navigateTo('page-profile')" id="nav-btn-profile" class="nav-item flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-all duration-200">
+            <span class="material-symbols-outlined">account_circle</span>
+            <span class="font-label-sm text-label-sm">Profile</span>
+        </button>
+    </nav>
+
+    <!-- Decorative Soft Glow Background Elements -->
+    <div class="fixed top-0 right-0 w-96 h-96 bg-primary-container/10 blur-[100px] -z-10 rounded-full pointer-events-none"></div>
+    <div class="fixed bottom-0 left-0 w-80 h-80 bg-teal-calm/10 blur-[100px] -z-10 rounded-full pointer-events-none"></div>
+
+    <!-- Application JavaScript Logic -->
+    <script>
+        // 1. Navigation / SPA Router Logic
+        function navigateTo(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-view').forEach(page => {
+                page.classList.add('hidden');
+            });
+            // Show selected page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Update Bottom Navigation Active Styles
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                btn.className = "nav-item flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-all duration-200";
+                const icon = btn.querySelector('.material-symbols-outlined');
+                if (icon) icon.classList.remove('active-icon');
+            });
+
+            const activeMap = {
+                'page-home': 'nav-btn-home',
+                'page-categories': 'nav-btn-categories',
+                'page-post': 'nav-btn-post',
+                'page-profile': 'nav-btn-profile'
+            };
+
+            const activeBtnId = activeMap[pageId];
+            if (activeBtnId) {
+                const activeBtn = document.getElementById(activeBtnId);
+                if (activeBtn) {
+                    activeBtn.className = "nav-item flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:scale-90 transition-all duration-200";
+                    const icon = activeBtn.querySelector('.material-symbols-outlined');
+                    if (icon) icon.classList.add('active-icon');
+                }
+            }
+        }
+
+        // 2. Post Creation Features
+        const textInput = document.getElementById('post-textarea');
+        const charCount = document.getElementById('char-count');
+        if (textInput && charCount) {
+            textInput.addEventListener('input', (e) => {
+                const count = e.target.value.length;
+                charCount.textContent = `${count} / 2000`;
+                if (count > 2000) {
+                    charCount.classList.add('text-error');
+                } else {
+                    charCount.classList.remove('text-error');
+                }
+            });
+        }
+
+        const tagButtons = document.querySelectorAll('.tag-buttons-container button');
+        tagButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tagButtons.forEach(b => {
+                    b.classList.remove('bg-primary-container/20', 'border-primary-container', 'text-on-primary-container');
+                    b.classList.add('border-outline-variant', 'text-on-surface-variant');
+                });
+                btn.classList.add('bg-primary-container/20', 'border-primary-container', 'text-on-primary-container');
+                btn.classList.remove('border-outline-variant', 'text-on-surface-variant');
+            });
+        });
+
+        // 3. Category Search Simulation
+        const searchInput = document.getElementById('category-search-input');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                const cards = document.querySelectorAll('#page-categories .category-card');
+                cards.forEach(card => {
+                    const title = card.querySelector('h3')?.innerText.toLowerCase() || '';
+                    const desc = card.querySelector('p')?.innerText.toLowerCase() || '';
+                    if (title.includes(term) || desc.includes(term)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // 4. Mode Toggles
+        // Home Mode Toggle
+        const profBtnHome = document.getElementById('prof-mode-home');
+        const commBtnHome = document.getElementById('comm-mode-home');
+        if (profBtnHome && commBtnHome) {
+            profBtnHome.addEventListener('click', () => {
+                profBtnHome.classList.add('bg-white', 'text-primary', 'shadow-sm');
+                profBtnHome.classList.remove('text-on-surface-variant');
+                commBtnHome.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+                commBtnHome.classList.add('text-on-surface-variant');
+                document.body.style.backgroundColor = "#FFF5F5";
+            });
+
+            commBtnHome.addEventListener('click', () => {
+                commBtnHome.classList.add('bg-white', 'text-primary', 'shadow-sm');
+                commBtnHome.classList.remove('text-on-surface-variant');
+                profBtnHome.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+                profBtnHome.classList.add('text-on-surface-variant');
+                document.body.style.backgroundColor = "#FBF9F8";
+            });
+        }
+
+        // Profile Focus Mode Toggle
+        function toggleProfileMode(mode) {
+            const slider = document.getElementById('profile-mode-slider');
+            const profText = document.getElementById('prof-text');
+            const commText = document.getElementById('comm-text');
+            if (!slider || !profText || !commText) return;
+
+            if (mode === 'prof') {
+                slider.style.left = '4px';
+                slider.style.backgroundColor = '#924a36';
+                profText.classList.add('text-white');
+                profText.classList.remove('text-on-surface-variant');
+                commText.classList.add('text-on-surface-variant');
+                commText.classList.remove('text-white');
+            } else {
+                slider.style.left = '49%';
+                slider.style.backgroundColor = '#82C0C0';
+                commText.classList.add('text-white');
+                commText.classList.remove('text-on-surface-variant');
+                profText.classList.add('text-on-surface-variant');
+                profText.classList.remove('text-white');
+            }
+        }
+
+        // 5. Header Shadow on Scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (header) {
+                if (window.scrollY > 20) {
+                    header.classList.add('shadow-md');
+                } else {
+                    header.classList.remove('shadow-md');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
